@@ -1,11 +1,13 @@
-// // src/context/AuthContext.jsx
+
+
+
 // import { createContext, useContext, useEffect, useState } from "react";
 
 // const AuthContext = createContext();
 
 // export function AuthProvider({ children }) {
 //   const [user, setUser] = useState(null);
-//   const [userType, setUserType] = useState(null); // "admin" or "employee"
+//   const [userType, setUserType] = useState(null); // "admin" | "employee" | "affiliate"
 //   const [loading, setLoading] = useState(true);
 
 //   // Load from storage on mount
@@ -15,8 +17,11 @@
 //     const type = localStorage.getItem("user_type");
 
 //     if (token && type) {
-//       const key = type === "admin" ? "admin_user" : "employee_user";
-//       const cachedUser = localStorage.getItem(key);
+//       let userKey = "admin_user";
+//       if (type === "employee") userKey = "employee_user";
+//       if (type === "affiliate") userKey = "affiliate_user";
+
+//       const cachedUser = localStorage.getItem(userKey);
 
 //       if (cachedUser) {
 //         setUser(JSON.parse(cachedUser));
@@ -35,14 +40,17 @@
 //     // Save User Type
 //     localStorage.setItem("user_type", type);
 
-//     // Save User Data
-//     const userKey = type === "admin" ? "admin_user" : "employee_user";
+//     // Save User Data based on type
+//     let userKey = "admin_user";
+//     if (type === "employee") userKey = "employee_user";
+//     if (type === "affiliate") userKey = "affiliate_user";
+
 //     localStorage.setItem(userKey, JSON.stringify(userData));
 
 //     setUser(userData);
 //     setUserType(type);
 
-//     console.log(`✅ Logged in as ${type} | Token saved successfully`);
+//     console.log(`✅ Logged in as ${type}`);
 //   };
 
 //   const logout = () => {
@@ -59,6 +67,7 @@
 //         userType,
 //         isAdmin: userType === "admin",
 //         isEmployee: userType === "employee",
+//         isAffiliate: userType === "affiliate",   // ← added
 //         loading,
 //         login,
 //         logout,
@@ -75,84 +84,206 @@
 // export const useAuth = () => useContext(AuthContext);
 
 
-import { createContext, useContext, useEffect, useState } from "react";
 
-const AuthContext = createContext();
+// src/context/AuthContext.jsx
+
+import {
+    createContext,
+    useContext,
+    useEffect,
+    useState,
+} from "react";
+
+const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [userType, setUserType] = useState(null); // "admin" | "employee" | "affiliate"
-  const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState(null);
+    const [userType, setUserType] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-  // Load from storage on mount
-  useEffect(() => {
-    const token =
-      localStorage.getItem("token") || sessionStorage.getItem("token");
-    const type = localStorage.getItem("user_type");
+    // =========================================================
+    // LOAD AUTH DATA FROM LOCAL STORAGE
+    // =========================================================
+    useEffect(() => {
+        try {
+            const token = localStorage.getItem("token");
+            const type = localStorage.getItem("user_type");
 
-    if (token && type) {
-      let userKey = "admin_user";
-      if (type === "employee") userKey = "employee_user";
-      if (type === "affiliate") userKey = "affiliate_user";
+            if (token && type) {
+                let userKey = "admin_user";
 
-      const cachedUser = localStorage.getItem(userKey);
+                if (type === "employee") {
+                    userKey = "employee_user";
+                }
 
-      if (cachedUser) {
-        setUser(JSON.parse(cachedUser));
-        setUserType(type);
-      }
-    }
-    setLoading(false);
-  }, []);
+                if (type === "affiliate") {
+                    userKey = "affiliate_user";
+                }
 
-  const login = (userData, token, type = "admin", remember = false) => {
-    const storage = remember ? localStorage : sessionStorage;
+                const cachedUser = localStorage.getItem(userKey);
 
-    // Save Token
-    storage.setItem("token", token);
+                if (cachedUser) {
+                    setUser(JSON.parse(cachedUser));
+                    setUserType(type);
+                } else {
+                    // Token exists but user data doesn't
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("user_type");
+                }
+            }
+        } catch (error) {
+            console.error("Auth restore error:", error);
 
-    // Save User Type
-    localStorage.setItem("user_type", type);
+            localStorage.removeItem("token");
+            localStorage.removeItem("user_type");
+            localStorage.removeItem("admin_user");
+            localStorage.removeItem("employee_user");
+            localStorage.removeItem("affiliate_user");
 
-    // Save User Data based on type
-    let userKey = "admin_user";
-    if (type === "employee") userKey = "employee_user";
-    if (type === "affiliate") userKey = "affiliate_user";
+            setUser(null);
+            setUserType(null);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
 
-    localStorage.setItem(userKey, JSON.stringify(userData));
+    // =========================================================
+    // LOGIN
+    // =========================================================
+    const login = (userData, token, type = "admin") => {
+        if (!token) {
+            console.error("Login failed: Token is missing.");
+            return false;
+        }
 
-    setUser(userData);
-    setUserType(type);
+        if (!userData) {
+            console.error("Login failed: User data is missing.");
+            return false;
+        }
 
-    console.log(`✅ Logged in as ${type}`);
-  };
+        try {
+            // -------------------------------------------------
+            // SAVE JWT TOKEN
+            // -------------------------------------------------
+            localStorage.setItem("token", token);
 
-  const logout = () => {
-    localStorage.clear();
-    sessionStorage.clear();
-    setUser(null);
-    setUserType(null);
-  };
+            // -------------------------------------------------
+            // SAVE USER TYPE
+            // -------------------------------------------------
+            localStorage.setItem("user_type", type);
 
-  return (
-    <AuthContext.Provider
-      value={{
-        user,
-        userType,
-        isAdmin: userType === "admin",
-        isEmployee: userType === "employee",
-        isAffiliate: userType === "affiliate",   // ← added
-        loading,
-        login,
-        logout,
-        isAuthenticated: !!(
-          localStorage.getItem("token") || sessionStorage.getItem("token")
-        ),
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+            // -------------------------------------------------
+            // DETERMINE USER STORAGE KEY
+            // -------------------------------------------------
+            let userKey = "admin_user";
+
+            if (type === "employee") {
+                userKey = "employee_user";
+            }
+
+            if (type === "affiliate") {
+                userKey = "affiliate_user";
+            }
+
+            // -------------------------------------------------
+            // SAVE USER DATA
+            // -------------------------------------------------
+            localStorage.setItem(
+                userKey,
+                JSON.stringify(userData)
+            );
+
+            // -------------------------------------------------
+            // UPDATE REACT STATE
+            // -------------------------------------------------
+            setUser(userData);
+            setUserType(type);
+
+            console.log("=================================");
+            console.log("LOGIN SUCCESS");
+            console.log("User Type:", type);
+            console.log("User:", userData);
+            console.log("Token Saved:", !!localStorage.getItem("token"));
+            console.log("=================================");
+
+            return true;
+        } catch (error) {
+            console.error("Login storage error:", error);
+            return false;
+        }
+    };
+
+    // =========================================================
+    // LOGOUT
+    // =========================================================
+    const logout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user_type");
+
+        localStorage.removeItem("admin_user");
+        localStorage.removeItem("employee_user");
+        localStorage.removeItem("affiliate_user");
+
+        sessionStorage.removeItem("token");
+
+        setUser(null);
+        setUserType(null);
+
+        console.log("Logged out successfully.");
+    };
+
+    // =========================================================
+    // AUTH STATUS
+    // =========================================================
+    const isAuthenticated = !!localStorage.getItem("token");
+
+    // =========================================================
+    // ROLE CHECKS
+    // =========================================================
+    const isAdmin = userType === "admin";
+    const isEmployee = userType === "employee";
+    const isAffiliate = userType === "affiliate";
+
+    // =========================================================
+    // PROVIDER
+    // =========================================================
+    return (
+        <AuthContext.Provider
+            value={{
+                // User
+                user,
+                userType,
+
+                // Role checks
+                isAdmin,
+                isEmployee,
+                isAffiliate,
+
+                // Authentication
+                isAuthenticated,
+                loading,
+
+                // Functions
+                login,
+                logout,
+            }}
+        >
+            {children}
+        </AuthContext.Provider>
+    );
 }
 
-export const useAuth = () => useContext(AuthContext);
+// =============================================================
+// CUSTOM HOOK
+// =============================================================
+export const useAuth = () => {
+    const context = useContext(AuthContext);
+
+    if (!context) {
+        throw new Error(
+            "useAuth must be used inside an AuthProvider"
+        );
+    }
+
+    return context;
+};

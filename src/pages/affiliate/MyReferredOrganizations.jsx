@@ -1,281 +1,6 @@
-// import { useState } from "react";
-// import { Eye, X, Percent, CreditCard, Calendar } from "lucide-react";
-
-// export default function MyReferredOrganizations() {
-//   const [selectedOrg, setSelectedOrg] = useState(null);
-
-//   // Static data – replace with API later
-//   const organizations = [
-//     {
-//       id: 1,
-//       name: "Brand Crest Digital Private Limited",
-//       email: "sales.brandcrestdigital@gmail.com",
-//       phone: "7204480016",
-//       commission_percent: 10,
-//       commission_type: "lifetime",
-//       total_cards: 12,
-//       total_commission: 1850.5,
-//       transactions: [
-//         {
-//           id: 101,
-//           date: "25/08/2026",
-//           cards: 5,
-//           amount: 4500,
-//           commission: 450,
-//           status: "Paid",
-//         },
-//         {
-//           id: 102,
-//           date: "18/08/2026",
-//           cards: 4,
-//           amount: 3600,
-//           commission: 360,
-//           status: "Paid",
-//         },
-//         {
-//           id: 103,
-//           date: "10/08/2026",
-//           cards: 3,
-//           amount: 2700,
-//           commission: 270,
-//           status: "Pending",
-//         },
-//       ],
-//     },
-//     {
-//       id: 2,
-//       name: "Shree Jee Trading Co",
-//       email: "goelamit283@gmail.com",
-//       phone: "9667416210",
-//       commission_percent: 10,
-//       commission_type: "lifetime",
-//       total_cards: 1,
-//       total_commission: 85.0,
-//       transactions: [
-//         {
-//           id: 201,
-//           date: "25/08/2026",
-//           cards: 1,
-//           amount: 850,
-//           commission: 85,
-//           status: "Paid",
-//         },
-//       ],
-//     },
-//     {
-//       id: 3,
-//       name: "Chandgothia Artha Saarathee",
-//       email: "arthasarathree@gmail.com",
-//       phone: "9435231100",
-//       commission_percent: 8,
-//       commission_type: "onetime",
-//       total_cards: 1,
-//       total_commission: 68.0,
-//       transactions: [
-//         {
-//           id: 301,
-//           date: "19/08/2026",
-//           cards: 1,
-//           amount: 850,
-//           commission: 68,
-//           status: "Paid",
-//         },
-//       ],
-//     },
-//   ];
-
-//   // Mask email & phone
-//   const maskEmail = (email) => {
-//     if (!email) return "-";
-//     const [name, domain] = email.split("@");
-//     return `${name.slice(0, 2)}****@${domain}`;
-//   };
-
-//   const maskPhone = (phone) => {
-//     if (!phone) return "-";
-//     return `******${phone.slice(-4)}`;
-//   };
-
-//   return (
-//     <div className="p-6 lg:p-8 max-w-7xl mx-auto">
-//       {/* Header */}
-//       <div className="mb-8">
-//         <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">
-//           My Referred Organizations
-//         </h1>
-//         <p className="text-gray-500 mt-1">
-//           Organizations registered using your referral link
-//         </p>
-//       </div>
-
-//       {/* Table */}
-//       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-//         <div className="overflow-x-auto">
-//           <table className="w-full text-left">
-//             <thead>
-//               <tr className="bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-//                 <th className="px-6 py-4">Name</th>
-//                 <th className="px-6 py-4">Email</th>
-//                 <th className="px-6 py-4">Phone</th>
-//                 <th className="px-6 py-4 text-center">Commission %</th>
-//                 <th className="px-6 py-4 text-center">Total Cards</th>
-//                 <th className="px-6 py-4 text-center">Total Earned</th>
-//                 <th className="px-6 py-4 text-center">Action</th>
-//               </tr>
-//             </thead>
-//             <tbody className="divide-y divide-gray-50">
-//               {organizations.map((org) => (
-//                 <tr key={org.id} className="hover:bg-orange-50/40 transition">
-//                   <td className="px-6 py-4 font-medium text-gray-900">
-//                     {org.name}
-//                   </td>
-//                   <td className="px-6 py-4 text-gray-600 text-sm">
-//                     {maskEmail(org.email)}
-//                   </td>
-//                   <td className="px-6 py-4 text-gray-600 text-sm">
-//                     {maskPhone(org.phone)}
-//                   </td>
-//                   <td className="px-6 py-4 text-center">
-//                     <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-orange-50 text-[#FC6C26] text-sm font-semibold">
-//                       <Percent size={12} />
-//                       {org.commission_percent}%
-//                     </span>
-//                   </td>
-//                   <td className="px-6 py-4 text-center font-medium">
-//                     {org.total_cards}
-//                   </td>
-//                   <td className="px-6 py-4 text-center font-semibold text-green-600">
-//                     ₹{org.total_commission.toLocaleString("en-IN")}
-//                   </td>
-//                   <td className="px-6 py-4 text-center">
-//                     <button
-//                       onClick={() => setSelectedOrg(org)}
-//                       className="inline-flex items-center gap-1.5 text-[#FC6C26] font-semibold text-sm hover:underline"
-//                     >
-//                       <Eye size={16} />
-//                       View
-//                     </button>
-//                   </td>
-//                 </tr>
-//               ))}
-
-//               {organizations.length === 0 && (
-//                 <tr>
-//                   <td colSpan={7} className="px-6 py-16 text-center text-gray-400">
-//                     No referred organizations yet
-//                   </td>
-//                 </tr>
-//               )}
-//             </tbody>
-//           </table>
-//         </div>
-//       </div>
-
-//       {/* ===================== VIEW ORGANIZATION MODAL ===================== */}
-//       {selectedOrg && (
-//         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-4">
-//           <div className="bg-white rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden shadow-2xl">
-//             {/* Modal Header */}
-//             <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
-//               <div>
-//                 <h2 className="text-xl font-bold text-gray-900">
-//                   {selectedOrg.name}
-//                 </h2>
-//                 <p className="text-sm text-gray-500 mt-0.5">
-//                   Commission: {selectedOrg.commission_percent}% (
-//                   {selectedOrg.commission_type})
-//                 </p>
-//               </div>
-//               <button
-//                 onClick={() => setSelectedOrg(null)}
-//                 className="p-2 rounded-full hover:bg-gray-100 text-gray-500"
-//               >
-//                 <X size={20} />
-//               </button>
-//             </div>
-
-//             {/* Modal Body */}
-//             <div className="p-6 overflow-y-auto max-h-[calc(90vh-80px)]">
-//               {/* Summary Cards */}
-//               <div className="grid grid-cols-3 gap-4 mb-6">
-//                 <div className="bg-orange-50 rounded-xl p-4 text-center">
-//                   <p className="text-2xl font-bold text-[#FC6C26]">
-//                     {selectedOrg.commission_percent}%
-//                   </p>
-//                   <p className="text-xs text-gray-500 mt-1">Commission Rate</p>
-//                 </div>
-//                 <div className="bg-blue-50 rounded-xl p-4 text-center">
-//                   <p className="text-2xl font-bold text-blue-600">
-//                     {selectedOrg.total_cards}
-//                   </p>
-//                   <p className="text-xs text-gray-500 mt-1">Total Cards</p>
-//                 </div>
-//                 <div className="bg-green-50 rounded-xl p-4 text-center">
-//                   <p className="text-2xl font-bold text-green-600">
-//                     ₹{selectedOrg.total_commission.toLocaleString("en-IN")}
-//                   </p>
-//                   <p className="text-xs text-gray-500 mt-1">Total Earned</p>
-//                 </div>
-//               </div>
-
-//               {/* Transactions Table */}
-//               <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-//                 <CreditCard size={18} />
-//                 Transactions
-//               </h3>
-
-//               <div className="border border-gray-100 rounded-xl overflow-hidden">
-//                 <table className="w-full text-left text-sm">
-//                   <thead className="bg-gray-50 text-xs text-gray-500 uppercase">
-//                     <tr>
-//                       <th className="px-4 py-3">Date</th>
-//                       <th className="px-4 py-3">Cards</th>
-//                       <th className="px-4 py-3">Amount</th>
-//                       <th className="px-4 py-3">Your Commission</th>
-//                       <th className="px-4 py-3">Status</th>
-//                     </tr>
-//                   </thead>
-//                   <tbody className="divide-y divide-gray-50">
-//                     {selectedOrg.transactions.map((tx) => (
-//                       <tr key={tx.id} className="hover:bg-gray-50">
-//                         <td className="px-4 py-3 flex items-center gap-1.5 text-gray-600">
-//                           <Calendar size={14} />
-//                           {tx.date}
-//                         </td>
-//                         <td className="px-4 py-3 font-medium">{tx.cards}</td>
-//                         <td className="px-4 py-3">
-//                           ₹{tx.amount.toLocaleString("en-IN")}
-//                         </td>
-//                         <td className="px-4 py-3 font-semibold text-green-600">
-//                           ₹{tx.commission.toLocaleString("en-IN")}
-//                         </td>
-//                         <td className="px-4 py-3">
-//                           <span
-//                             className={`px-2.5 py-1 rounded-full text-xs font-semibold ${
-//                               tx.status === "Paid"
-//                                 ? "bg-green-100 text-green-700"
-//                                 : "bg-yellow-100 text-yellow-700"
-//                             }`}
-//                           >
-//                             {tx.status}
-//                           </span>
-//                         </td>
-//                       </tr>
-//                     ))}
-//                   </tbody>
-//                 </table>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
-
 // src/pages/affiliate/MyReferredOrganizations.jsx
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Eye,
   X,
@@ -285,102 +10,120 @@ import {
   Mail,
   Phone,
   Building2,
+  ChevronLeft,
+  ChevronRight,
+  RefreshCw,
 } from "lucide-react";
+
+import api from "../../services/api";
 
 const PRIMARY = "#fe7f2d";
 const DARK = "#464243";
 
 export default function MyReferredOrganizations() {
+  // ============================================================
+  // STATE
+  // ============================================================
+
+  const [organizations, setOrganizations] = useState([]);
   const [selectedOrg, setSelectedOrg] = useState(null);
 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const [pagination, setPagination] = useState({
+    current_page: 1,
+    per_page: 10,
+    total: 0,
+    last_page: 1,
+    from: 0,
+    to: 0,
+  });
+
   // ============================================================
-  // STATIC DATA
-  // Replace this with API data later
+  // FETCH ORGANIZATIONS
   // ============================================================
 
-  const organizations = [
-    {
-      id: 1,
-      name: "Brand Crest Digital Private Limited",
-      email: "sales.brandcrestdigital@gmail.com",
-      phone: "7204480016",
-      commission_percent: 10,
-      commission_type: "lifetime",
-      total_cards: 12,
-      total_commission: 1850.5,
+  const fetchOrganizations = async (page = 1) => {
+    setLoading(true);
+    setError("");
 
-      transactions: [
-        {
-          id: 101,
-          date: "25/08/2026",
-          cards: 5,
-          amount: 4500,
-          commission: 450,
-          status: "Paid",
+    try {
+      const res = await api.get("/affiliate/organizations", {
+        params: {
+          page: page,
+          per_page: pagination.per_page,
         },
-        {
-          id: 102,
-          date: "18/08/2026",
-          cards: 4,
-          amount: 3600,
-          commission: 360,
-          status: "Paid",
-        },
-        {
-          id: 103,
-          date: "10/08/2026",
-          cards: 3,
-          amount: 2700,
-          commission: 270,
-          status: "Pending",
-        },
-      ],
-    },
+      });
 
-    {
-      id: 2,
-      name: "Shree Jee Trading Co",
-      email: "goelamit283@gmail.com",
-      phone: "9667416210",
-      commission_percent: 10,
-      commission_type: "lifetime",
-      total_cards: 1,
-      total_commission: 85,
+      console.log("Organizations API Response:", res.data);
 
-      transactions: [
-        {
-          id: 201,
-          date: "25/08/2026",
-          cards: 1,
-          amount: 850,
-          commission: 85,
-          status: "Paid",
-        },
-      ],
-    },
+      if (res.data?.status === true) {
+        setOrganizations(res.data.data || []);
 
-    {
-      id: 3,
-      name: "Chandgothia Artha Saarathee",
-      email: "arthasarathree@gmail.com",
-      phone: "9435231100",
-      commission_percent: 8,
-      commission_type: "onetime",
-      total_cards: 1,
-      total_commission: 68,
+        setPagination({
+          current_page: Number(res.data.meta?.current_page || 1),
+          per_page: Number(res.data.meta?.per_page || 10),
+          total: Number(res.data.meta?.total || 0),
+          last_page: Number(res.data.meta?.last_page || 1),
+          from: Number(res.data.meta?.from || 0),
+          to: Number(res.data.meta?.to || 0),
+        });
+      } else {
+        setOrganizations([]);
 
-      transactions: [
-        {
-          id: 301,
-          date: "19/08/2026",
-          cards: 1,
-          amount: 850,
-          commission: 68,
-          status: "Paid",
-        },
-      ],
-    },
-  ];
+        setError(
+          res.data?.message ||
+            "Unable to fetch referred organizations."
+        );
+      }
+    } catch (err) {
+      console.error("Organizations API Error:", err);
+
+      setOrganizations([]);
+
+      setError(
+        err.response?.data?.message ||
+          "Unable to fetch referred organizations. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ============================================================
+  // INITIAL LOAD
+  // ============================================================
+
+  useEffect(() => {
+    fetchOrganizations(1);
+  }, []);
+
+  // ============================================================
+  // PAGINATION
+  // ============================================================
+
+  const handlePrevious = () => {
+    if (
+      pagination.current_page > 1 &&
+      !loading
+    ) {
+      fetchOrganizations(
+        pagination.current_page - 1
+      );
+    }
+  };
+
+  const handleNext = () => {
+    if (
+      pagination.current_page < pagination.last_page &&
+      !loading
+    ) {
+      fetchOrganizations(
+        pagination.current_page + 1
+      );
+    }
+  };
 
   // ============================================================
   // MASK EMAIL
@@ -395,6 +138,10 @@ export default function MyReferredOrganizations() {
       return email;
     }
 
+    if (name.length <= 2) {
+      return `${name}****@${domain}`;
+    }
+
     return `${name.slice(0, 2)}****@${domain}`;
   };
 
@@ -405,7 +152,13 @@ export default function MyReferredOrganizations() {
   const maskPhone = (phone) => {
     if (!phone) return "-";
 
-    return `******${phone.slice(-4)}`;
+    const phoneString = String(phone);
+
+    if (phoneString.length <= 4) {
+      return phoneString;
+    }
+
+    return `******${phoneString.slice(-4)}`;
   };
 
   // ============================================================
@@ -413,7 +166,7 @@ export default function MyReferredOrganizations() {
   // ============================================================
 
   const formatMoney = (amount) => {
-    return Number(amount).toLocaleString("en-IN", {
+    return Number(amount || 0).toLocaleString("en-IN", {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     });
@@ -434,6 +187,26 @@ export default function MyReferredOrganizations() {
 
     return type || "-";
   };
+
+  // ============================================================
+  // OPEN ORGANIZATION
+  // ============================================================
+
+  const handleViewOrganization = (org) => {
+    setSelectedOrg(org);
+  };
+
+  // ============================================================
+  // CLOSE MODAL
+  // ============================================================
+
+  const handleCloseModal = () => {
+    setSelectedOrg(null);
+  };
+
+  // ============================================================
+  // RENDER
+  // ============================================================
 
   return (
     <div
@@ -468,6 +241,63 @@ export default function MyReferredOrganizations() {
       </div>
 
       {/* ========================================================
+          ERROR
+      ========================================================= */}
+
+      {error && (
+        <div
+          className="
+            mb-5
+            bg-red-50
+            border
+            border-red-100
+            text-red-600
+            rounded-xl
+            px-4
+            py-3
+            flex
+            items-center
+            justify-between
+            gap-4
+          "
+        >
+          <p className="text-sm">
+            {error}
+          </p>
+
+          <button
+            type="button"
+            onClick={() =>
+              fetchOrganizations(
+                pagination.current_page
+              )
+            }
+            disabled={loading}
+            className="
+              inline-flex
+              items-center
+              gap-2
+              px-3
+              py-2
+              rounded-lg
+              bg-white
+              border
+              border-red-200
+              text-red-600
+              text-sm
+              font-semibold
+              hover:bg-red-50
+              disabled:opacity-50
+            "
+          >
+            <RefreshCw size={15} />
+
+            Retry
+          </button>
+        </div>
+      )}
+
+      {/* ========================================================
           DESKTOP TABLE
       ========================================================= */}
 
@@ -481,9 +311,10 @@ export default function MyReferredOrganizations() {
           overflow-hidden
         "
       >
-        {/* Horizontal scroll for tablet / desktop */}
+        {/* Horizontal scroll */}
         <div className="overflow-x-auto">
           <table className="w-full min-w-[950px] text-left">
+
             {/* ==================================================
                 TABLE HEADER
             ================================================== */}
@@ -536,162 +367,10 @@ export default function MyReferredOrganizations() {
             ================================================== */}
 
             <tbody className="divide-y divide-gray-50">
-              {organizations.map((org) => (
-                <tr
-                  key={org.id}
-                  className="
-                    hover:bg-orange-50/40
-                    transition
-                  "
-                >
-                  {/* NAME */}
 
-                  <td
-                    className="
-                      px-6
-                      py-4
-                      font-medium
-                      text-gray-900
-                    "
-                  >
-                    <div className="flex items-center gap-3">
-                      <div
-                        className="
-                          w-10
-                          h-10
-                          rounded-xl
-                          flex
-                          items-center
-                          justify-center
-                          shrink-0
-                        "
-                        style={{
-                          backgroundColor: "#fff4ec",
-                        }}
-                      >
-                        <Building2
-                          size={19}
-                          style={{ color: PRIMARY }}
-                        />
-                      </div>
+              {/* LOADING */}
 
-                      <span>
-                        {org.name}
-                      </span>
-                    </div>
-                  </td>
-
-                  {/* EMAIL */}
-
-                  <td
-                    className="
-                      px-6
-                      py-4
-                      text-gray-600
-                      text-sm
-                    "
-                  >
-                    {maskEmail(org.email)}
-                  </td>
-
-                  {/* PHONE */}
-
-                  <td
-                    className="
-                      px-6
-                      py-4
-                      text-gray-600
-                      text-sm
-                    "
-                  >
-                    {maskPhone(org.phone)}
-                  </td>
-
-                  {/* COMMISSION */}
-
-                  <td className="px-6 py-4 text-center">
-                    <span
-                      className="
-                        inline-flex
-                        items-center
-                        gap-1
-                        px-2.5
-                        py-1
-                        rounded-full
-                        text-sm
-                        font-semibold
-                      "
-                      style={{
-                        backgroundColor: "#fff4ec",
-                        color: PRIMARY,
-                      }}
-                    >
-                      <Percent size={12} />
-
-                      {org.commission_percent}%
-                    </span>
-                  </td>
-
-                  {/* CARDS */}
-
-                  <td
-                    className="
-                      px-6
-                      py-4
-                      text-center
-                      font-medium
-                      text-gray-800
-                    "
-                  >
-                    {org.total_cards}
-                  </td>
-
-                  {/* TOTAL EARNED */}
-
-                  <td
-                    className="
-                      px-6
-                      py-4
-                      text-center
-                      font-semibold
-                      text-green-600
-                    "
-                  >
-                    ₹{formatMoney(org.total_commission)}
-                  </td>
-
-                  {/* ACTION */}
-
-                  <td className="px-6 py-4 text-center">
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setSelectedOrg(org)
-                      }
-                      className="
-                        inline-flex
-                        items-center
-                        gap-1.5
-                        font-semibold
-                        text-sm
-                        hover:underline
-                        transition
-                      "
-                      style={{
-                        color: PRIMARY,
-                      }}
-                    >
-                      <Eye size={16} />
-
-                      View
-                    </button>
-                  </td>
-                </tr>
-              ))}
-
-              {/* EMPTY STATE */}
-
-              {organizations.length === 0 && (
+              {loading && (
                 <tr>
                   <td
                     colSpan={7}
@@ -702,10 +381,210 @@ export default function MyReferredOrganizations() {
                       text-gray-400
                     "
                   >
-                    No referred organizations yet
+                    <div className="flex flex-col items-center justify-center gap-3">
+                      <RefreshCw
+                        size={24}
+                        className="animate-spin"
+                        style={{ color: PRIMARY }}
+                      />
+
+                      <span>
+                        Loading organizations...
+                      </span>
+                    </div>
                   </td>
                 </tr>
               )}
+
+              {/* DATA */}
+
+              {!loading &&
+                organizations.map((org) => (
+                  <tr
+                    key={org.id}
+                    className="
+                      hover:bg-orange-50/40
+                      transition
+                    "
+                  >
+
+                    {/* NAME */}
+
+                    <td
+                      className="
+                        px-6
+                        py-4
+                        font-medium
+                        text-gray-900
+                      "
+                    >
+                      <div className="flex items-center gap-3">
+
+                        <div
+                          className="
+                            w-10
+                            h-10
+                            rounded-xl
+                            flex
+                            items-center
+                            justify-center
+                            shrink-0
+                          "
+                          style={{
+                            backgroundColor: "#fff4ec",
+                          }}
+                        >
+                          <Building2
+                            size={19}
+                            style={{
+                              color: PRIMARY,
+                            }}
+                          />
+                        </div>
+
+                        <span>
+                          {org.name || "-"}
+                        </span>
+
+                      </div>
+                    </td>
+
+                    {/* EMAIL */}
+
+                    <td
+                      className="
+                        px-6
+                        py-4
+                        text-gray-600
+                        text-sm
+                      "
+                    >
+                      {maskEmail(org.email)}
+                    </td>
+
+                    {/* PHONE */}
+
+                    <td
+                      className="
+                        px-6
+                        py-4
+                        text-gray-600
+                        text-sm
+                      "
+                    >
+                      {maskPhone(org.phone)}
+                    </td>
+
+                    {/* COMMISSION */}
+
+                    <td className="px-6 py-4 text-center">
+                      <span
+                        className="
+                          inline-flex
+                          items-center
+                          gap-1
+                          px-2.5
+                          py-1
+                          rounded-full
+                          text-sm
+                          font-semibold
+                        "
+                        style={{
+                          backgroundColor: "#fff4ec",
+                          color: PRIMARY,
+                        }}
+                      >
+                        <Percent size={12} />
+
+                        {Number(
+                          org.commission_percentage || 0
+                        )}
+                        %
+                      </span>
+                    </td>
+
+                    {/* CARDS */}
+
+                    <td
+                      className="
+                        px-6
+                        py-4
+                        text-center
+                        font-medium
+                        text-gray-800
+                      "
+                    >
+                      {Number(
+                        org.total_cards || 0
+                      )}
+                    </td>
+
+                    {/* TOTAL EARNED */}
+
+                    <td
+                      className="
+                        px-6
+                        py-4
+                        text-center
+                        font-semibold
+                        text-green-600
+                      "
+                    >
+                      ₹
+                      {formatMoney(
+                        org.total_earned
+                      )}
+                    </td>
+
+                    {/* ACTION */}
+
+                    <td className="px-6 py-4 text-center">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          handleViewOrganization(org)
+                        }
+                        className="
+                          inline-flex
+                          items-center
+                          gap-1.5
+                          font-semibold
+                          text-sm
+                          hover:underline
+                          transition
+                        "
+                        style={{
+                          color: PRIMARY,
+                        }}
+                      >
+                        <Eye size={16} />
+
+                        View
+                      </button>
+                    </td>
+
+                  </tr>
+                ))}
+
+              {/* EMPTY STATE */}
+
+              {!loading &&
+                organizations.length === 0 && (
+                  <tr>
+                    <td
+                      colSpan={7}
+                      className="
+                        px-6
+                        py-16
+                        text-center
+                        text-gray-400
+                      "
+                    >
+                      No referred organizations yet
+                    </td>
+                  </tr>
+                )}
+
             </tbody>
           </table>
         </div>
@@ -715,212 +594,398 @@ export default function MyReferredOrganizations() {
           MOBILE ORGANIZATION CARDS
       ========================================================= */}
 
-      <div className="md:hidden mt-4 space-y-4">
-        {organizations.map((org) => (
-          <div
-            key={org.id}
-            className="
-              bg-white
-              rounded-2xl
-              border
-              border-gray-100
-              shadow-sm
-              p-4
-            "
-          >
-            {/* ORGANIZATION HEADER */}
+      {!loading && (
+        <div className="md:hidden mt-4 space-y-4">
 
-            <div className="flex items-start gap-3">
+          {organizations.map((org) => (
+            <div
+              key={org.id}
+              className="
+                bg-white
+                rounded-2xl
+                border
+                border-gray-100
+                shadow-sm
+                p-4
+              "
+            >
+
+              {/* ORGANIZATION HEADER */}
+
+              <div className="flex items-start gap-3">
+
+                <div
+                  className="
+                    w-11
+                    h-11
+                    rounded-xl
+                    flex
+                    items-center
+                    justify-center
+                    shrink-0
+                  "
+                  style={{
+                    backgroundColor: "#fff4ec",
+                  }}
+                >
+                  <Building2
+                    size={21}
+                    style={{
+                      color: PRIMARY,
+                    }}
+                  />
+                </div>
+
+                <div className="min-w-0 flex-1">
+
+                  <h3
+                    className="
+                      font-semibold
+                      text-gray-900
+                      text-sm
+                      leading-5
+                    "
+                  >
+                    {org.name || "-"}
+                  </h3>
+
+                  <p className="text-xs text-gray-500 mt-1">
+                    Organization #{org.id}
+                  </p>
+
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    handleViewOrganization(org)
+                  }
+                  className="
+                    w-9
+                    h-9
+                    rounded-lg
+                    flex
+                    items-center
+                    justify-center
+                    shrink-0
+                    transition
+                  "
+                  style={{
+                    backgroundColor: "#fff4ec",
+                    color: PRIMARY,
+                  }}
+                  aria-label="View organization"
+                >
+                  <Eye size={18} />
+                </button>
+
+              </div>
+
+              {/* CONTACT INFORMATION */}
+
+              <div className="mt-4 space-y-2">
+
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+
+                  <Mail
+                    size={15}
+                    className="text-gray-400 shrink-0"
+                  />
+
+                  <span className="truncate">
+                    {maskEmail(org.email)}
+                  </span>
+
+                </div>
+
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+
+                  <Phone
+                    size={15}
+                    className="text-gray-400 shrink-0"
+                  />
+
+                  <span>
+                    {maskPhone(org.phone)}
+                  </span>
+
+                </div>
+
+              </div>
+
+              {/* SUMMARY */}
+
               <div
                 className="
-                  w-11
-                  h-11
-                  rounded-xl
-                  flex
-                  items-center
-                  justify-center
-                  shrink-0
+                  grid
+                  grid-cols-3
+                  gap-2
+                  mt-4
+                  pt-4
+                  border-t
+                  border-gray-100
                 "
-                style={{
-                  backgroundColor: "#fff4ec",
-                }}
               >
-                <Building2
-                  size={21}
-                  style={{ color: PRIMARY }}
-                />
+
+                {/* COMMISSION */}
+
+                <div className="text-center">
+
+                  <p
+                    className="
+                      text-sm
+                      font-bold
+                    "
+                    style={{
+                      color: PRIMARY,
+                    }}
+                  >
+                    {Number(
+                      org.commission_percentage || 0
+                    )}
+                    %
+                  </p>
+
+                  <p className="text-[11px] text-gray-500 mt-1">
+                    Commission
+                  </p>
+
+                </div>
+
+                {/* CARDS */}
+
+                <div className="text-center">
+
+                  <p className="text-sm font-bold text-blue-600">
+                    {Number(
+                      org.total_cards || 0
+                    )}
+                  </p>
+
+                  <p className="text-[11px] text-gray-500 mt-1">
+                    Cards
+                  </p>
+
+                </div>
+
+                {/* EARNED */}
+
+                <div className="text-center">
+
+                  <p className="text-sm font-bold text-green-600">
+                    ₹
+                    {formatMoney(
+                      org.total_earned
+                    )}
+                  </p>
+
+                  <p className="text-[11px] text-gray-500 mt-1">
+                    Earned
+                  </p>
+
+                </div>
+
               </div>
 
-              <div className="min-w-0 flex-1">
-                <h3
-                  className="
-                    font-semibold
-                    text-gray-900
-                    text-sm
-                    leading-5
-                  "
-                >
-                  {org.name}
-                </h3>
-
-                <p className="text-xs text-gray-500 mt-1">
-                  Organization #{org.id}
-                </p>
-              </div>
+              {/* VIEW BUTTON */}
 
               <button
                 type="button"
                 onClick={() =>
-                  setSelectedOrg(org)
+                  handleViewOrganization(org)
                 }
                 className="
-                  w-9
-                  h-9
-                  rounded-lg
-                  flex
-                  items-center
-                  justify-center
-                  shrink-0
+                  w-full
+                  mt-4
+                  py-2.5
+                  rounded-xl
+                  border
+                  text-sm
+                  font-semibold
                   transition
                 "
                 style={{
-                  backgroundColor: "#fff4ec",
+                  borderColor: "#fed7aa",
                   color: PRIMARY,
+                  backgroundColor: "#fffaf7",
                 }}
-                aria-label="View organization"
               >
-                <Eye size={18} />
+                View Transactions
               </button>
+
             </div>
+          ))}
 
-            {/* CONTACT INFORMATION */}
+          {/* MOBILE EMPTY STATE */}
 
-            <div className="mt-4 space-y-2">
-              <div className="flex items-center gap-2 text-sm text-gray-600">
-                <Mail
-                  size={15}
-                  className="text-gray-400 shrink-0"
-                />
-
-                <span className="truncate">
-                  {maskEmail(org.email)}
-                </span>
-              </div>
-
-              <div className="flex items-center gap-2 text-sm text-gray-600">
-                <Phone
-                  size={15}
-                  className="text-gray-400 shrink-0"
-                />
-
-                <span>
-                  {maskPhone(org.phone)}
-                </span>
-              </div>
-            </div>
-
-            {/* SUMMARY */}
-
+          {organizations.length === 0 && (
             <div
               className="
-                grid
-                grid-cols-3
-                gap-2
-                mt-4
-                pt-4
-                border-t
-                border-gray-100
-              "
-            >
-              <div className="text-center">
-                <p
-                  className="
-                    text-sm
-                    font-bold
-                  "
-                  style={{ color: PRIMARY }}
-                >
-                  {org.commission_percent}%
-                </p>
-
-                <p className="text-[11px] text-gray-500 mt-1">
-                  Commission
-                </p>
-              </div>
-
-              <div className="text-center">
-                <p className="text-sm font-bold text-blue-600">
-                  {org.total_cards}
-                </p>
-
-                <p className="text-[11px] text-gray-500 mt-1">
-                  Cards
-                </p>
-              </div>
-
-              <div className="text-center">
-                <p className="text-sm font-bold text-green-600">
-                  ₹{formatMoney(org.total_commission)}
-                </p>
-
-                <p className="text-[11px] text-gray-500 mt-1">
-                  Earned
-                </p>
-              </div>
-            </div>
-
-            {/* VIEW BUTTON */}
-
-            <button
-              type="button"
-              onClick={() =>
-                setSelectedOrg(org)
-              }
-              className="
-                w-full
-                mt-4
-                py-2.5
-                rounded-xl
+                bg-white
+                rounded-2xl
                 border
-                text-sm
-                font-semibold
-                transition
+                border-gray-100
+                shadow-sm
+                px-6
+                py-16
+                text-center
+                text-gray-400
               "
-              style={{
-                borderColor: "#fed7aa",
-                color: PRIMARY,
-                backgroundColor: "#fffaf7",
-              }}
             >
-              View Transactions
-            </button>
-          </div>
-        ))}
-      </div>
+              No referred organizations yet
+            </div>
+          )}
 
-      {/* ========================================================
-          EMPTY MOBILE STATE
-      ========================================================= */}
-
-      {organizations.length === 0 && (
-        <div
-          className="
-            md:hidden
-            bg-white
-            rounded-2xl
-            border
-            border-gray-100
-            shadow-sm
-            px-6
-            py-16
-            mt-4
-            text-center
-            text-gray-400
-          "
-        >
-          No referred organizations yet
         </div>
       )}
+
+      {/* ========================================================
+          PAGINATION
+      ========================================================= */}
+
+      {!loading &&
+        pagination.total > 0 &&
+        pagination.last_page > 1 && (
+          <div
+            className="
+              mt-6
+              flex
+              flex-col
+              sm:flex-row
+              items-center
+              justify-between
+              gap-4
+            "
+          >
+
+            {/* SHOWING */}
+
+            <p className="text-sm text-gray-500">
+
+              Showing{" "}
+
+              <span className="font-semibold text-gray-700">
+                {pagination.from}
+              </span>
+
+              {" "}to{" "}
+
+              <span className="font-semibold text-gray-700">
+                {pagination.to}
+              </span>
+
+              {" "}of{" "}
+
+              <span className="font-semibold text-gray-700">
+                {pagination.total}
+              </span>
+
+              {" "}organizations
+
+            </p>
+
+            {/* PAGINATION */}
+
+            <div className="flex items-center gap-2">
+
+              {/* PREVIOUS */}
+
+              <button
+                type="button"
+                disabled={
+                  pagination.current_page <= 1 ||
+                  loading
+                }
+                onClick={handlePrevious}
+                className="
+                  inline-flex
+                  items-center
+                  gap-1
+                  px-3
+                  sm:px-4
+                  py-2
+                  rounded-lg
+                  border
+                  border-gray-200
+                  text-sm
+                  font-medium
+                  text-gray-700
+                  disabled:opacity-50
+                  disabled:cursor-not-allowed
+                  hover:bg-gray-50
+                  transition
+                "
+              >
+                <ChevronLeft size={16} />
+
+                <span className="hidden sm:inline">
+                  Previous
+                </span>
+              </button>
+
+              {/* PAGE */}
+
+              <div
+                className="
+                  px-3
+                  py-2
+                  text-sm
+                  text-gray-600
+                  whitespace-nowrap
+                "
+              >
+                Page{" "}
+
+                <span className="font-semibold">
+                  {pagination.current_page}
+                </span>
+
+                {" "}of{" "}
+
+                <span className="font-semibold">
+                  {pagination.last_page}
+                </span>
+              </div>
+
+              {/* NEXT */}
+
+              <button
+                type="button"
+                disabled={
+                  pagination.current_page >=
+                    pagination.last_page ||
+                  loading
+                }
+                onClick={handleNext}
+                className="
+                  inline-flex
+                  items-center
+                  gap-1
+                  px-3
+                  sm:px-4
+                  py-2
+                  rounded-lg
+                  border
+                  border-gray-200
+                  text-sm
+                  font-medium
+                  text-gray-700
+                  disabled:opacity-50
+                  disabled:cursor-not-allowed
+                  hover:bg-gray-50
+                  transition
+                "
+              >
+                <span className="hidden sm:inline">
+                  Next
+                </span>
+
+                <ChevronRight size={16} />
+              </button>
+
+            </div>
+          </div>
+        )}
 
       {/* ========================================================
           ORGANIZATION DETAILS MODAL
@@ -941,10 +1006,9 @@ export default function MyReferredOrganizations() {
             sm:px-4
             py-4
           "
-          onClick={() =>
-            setSelectedOrg(null)
-          }
+          onClick={handleCloseModal}
         >
+
           <div
             className="
               bg-white
@@ -962,6 +1026,7 @@ export default function MyReferredOrganizations() {
               e.stopPropagation()
             }
           >
+
             {/* ==================================================
                 MODAL HEADER
             ================================================== */}
@@ -981,7 +1046,9 @@ export default function MyReferredOrganizations() {
                 shrink-0
               "
             >
+
               <div className="min-w-0">
+
                 <h2
                   className="
                     text-lg
@@ -991,27 +1058,27 @@ export default function MyReferredOrganizations() {
                     break-words
                   "
                 >
-                  {selectedOrg.name}
+                  {selectedOrg.name || "-"}
                 </h2>
 
                 <p className="text-xs sm:text-sm text-gray-500 mt-1">
+
                   Commission:{" "}
+
                   <span className="font-medium">
-                    {selectedOrg.commission_percent}%
-                  </span>{" "}
-                  (
-                  {getCommissionTypeLabel(
-                    selectedOrg.commission_type
-                  )}
-                  )
+                    {Number(
+                      selectedOrg.commission_percentage || 0
+                    )}
+                    %
+                  </span>
+
                 </p>
+
               </div>
 
               <button
                 type="button"
-                onClick={() =>
-                  setSelectedOrg(null)
-                }
+                onClick={handleCloseModal}
                 className="
                   p-2
                   rounded-full
@@ -1024,6 +1091,7 @@ export default function MyReferredOrganizations() {
               >
                 <X size={20} />
               </button>
+
             </div>
 
             {/* ==================================================
@@ -1037,6 +1105,7 @@ export default function MyReferredOrganizations() {
                 overflow-y-auto
               "
             >
+
               {/* =================================================
                   ORGANIZATION CONTACT
               ================================================= */}
@@ -1050,7 +1119,9 @@ export default function MyReferredOrganizations() {
                   space-y-2
                 "
               >
+
                 <div className="flex items-center gap-2 text-sm text-gray-600">
+
                   <Mail
                     size={16}
                     className="text-gray-400"
@@ -1061,9 +1132,11 @@ export default function MyReferredOrganizations() {
                       selectedOrg.email
                     )}
                   </span>
+
                 </div>
 
                 <div className="flex items-center gap-2 text-sm text-gray-600">
+
                   <Phone
                     size={16}
                     className="text-gray-400"
@@ -1074,7 +1147,9 @@ export default function MyReferredOrganizations() {
                       selectedOrg.phone
                     )}
                   </span>
+
                 </div>
+
               </div>
 
               {/* =================================================
@@ -1091,6 +1166,7 @@ export default function MyReferredOrganizations() {
                   mb-6
                 "
               >
+
                 {/* COMMISSION */}
 
                 <div
@@ -1103,6 +1179,7 @@ export default function MyReferredOrganizations() {
                     backgroundColor: "#fff4ec",
                   }}
                 >
+
                   <p
                     className="
                       text-2xl
@@ -1112,40 +1189,52 @@ export default function MyReferredOrganizations() {
                       color: PRIMARY,
                     }}
                   >
-                    {selectedOrg.commission_percent}%
+                    {Number(
+                      selectedOrg.commission_percentage ||
+                        0
+                    )}
+                    %
                   </p>
 
                   <p className="text-xs text-gray-500 mt-1">
                     Commission Rate
                   </p>
+
                 </div>
 
                 {/* CARDS */}
 
                 <div className="bg-blue-50 rounded-xl p-4 text-center">
+
                   <p className="text-2xl font-bold text-blue-600">
-                    {selectedOrg.total_cards}
+                    {Number(
+                      selectedOrg.total_cards || 0
+                    )}
                   </p>
 
                   <p className="text-xs text-gray-500 mt-1">
                     Total Cards
                   </p>
+
                 </div>
 
                 {/* EARNED */}
 
                 <div className="bg-green-50 rounded-xl p-4 text-center">
+
                   <p className="text-xl sm:text-2xl font-bold text-green-600">
                     ₹
                     {formatMoney(
-                      selectedOrg.total_commission
+                      selectedOrg.total_earned
                     )}
                   </p>
 
                   <p className="text-xs text-gray-500 mt-1">
                     Total Earned
                   </p>
+
                 </div>
+
               </div>
 
               {/* =================================================
@@ -1168,230 +1257,302 @@ export default function MyReferredOrganizations() {
               </h3>
 
               {/* =================================================
-                  TRANSACTIONS TABLE
+                  TRANSACTIONS
               ================================================= */}
 
-              <div
-                className="
-                  border
-                  border-gray-100
-                  rounded-xl
-                  overflow-hidden
-                "
-              >
-                <div className="overflow-x-auto">
-                  <table
+              {selectedOrg.transactions &&
+              selectedOrg.transactions.length > 0 ? (
+                <>
+                  {/* DESKTOP TRANSACTION TABLE */}
+
+                  <div
                     className="
-                      w-full
-                      min-w-[650px]
-                      text-left
-                      text-sm
+                      border
+                      border-gray-100
+                      rounded-xl
+                      overflow-hidden
                     "
                   >
-                    <thead
-                      className="
-                        bg-gray-50
-                        text-xs
-                        text-gray-500
-                        uppercase
-                      "
-                    >
-                      <tr>
-                        <th className="px-4 py-3">
-                          Date
-                        </th>
 
-                        <th className="px-4 py-3">
-                          Cards
-                        </th>
+                    <div className="overflow-x-auto">
 
-                        <th className="px-4 py-3">
-                          Amount
-                        </th>
+                      <table
+                        className="
+                          w-full
+                          min-w-[650px]
+                          text-left
+                          text-sm
+                        "
+                      >
 
-                        <th className="px-4 py-3">
-                          Your Commission
-                        </th>
-
-                        <th className="px-4 py-3">
-                          Status
-                        </th>
-                      </tr>
-                    </thead>
-
-                    <tbody className="divide-y divide-gray-50">
-                      {selectedOrg.transactions.map(
-                        (tx) => (
-                          <tr
-                            key={tx.id}
-                            className="hover:bg-gray-50"
-                          >
-                            {/* DATE */}
-
-                            <td
-                              className="
-                                px-4
-                                py-3
-                                text-gray-600
-                              "
-                            >
-                              <div className="flex items-center gap-1.5 whitespace-nowrap">
-                                <Calendar
-                                  size={14}
-                                />
-
-                                {tx.date}
-                              </div>
-                            </td>
-
-                            {/* CARDS */}
-
-                            <td className="px-4 py-3 font-medium">
-                              {tx.cards}
-                            </td>
-
-                            {/* AMOUNT */}
-
-                            <td className="px-4 py-3 whitespace-nowrap">
-                              ₹
-                              {formatMoney(
-                                tx.amount
-                              )}
-                            </td>
-
-                            {/* COMMISSION */}
-
-                            <td
-                              className="
-                                px-4
-                                py-3
-                                font-semibold
-                                text-green-600
-                                whitespace-nowrap
-                              "
-                            >
-                              ₹
-                              {formatMoney(
-                                tx.commission
-                              )}
-                            </td>
-
-                            {/* STATUS */}
-
-                            <td className="px-4 py-3">
-                              <span
-                                className={`
-                                  inline-flex
-                                  px-2.5
-                                  py-1
-                                  rounded-full
-                                  text-xs
-                                  font-semibold
-                                  ${
-                                    tx.status ===
-                                    "Paid"
-                                      ? "bg-green-100 text-green-700"
-                                      : "bg-yellow-100 text-yellow-700"
-                                  }
-                                `}
-                              >
-                                {tx.status}
-                              </span>
-                            </td>
-                          </tr>
-                        )
-                      )}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              {/* =================================================
-                  MOBILE TRANSACTION CARDS
-              ================================================= */}
-
-              <div className="sm:hidden mt-3 space-y-3">
-                {selectedOrg.transactions.map(
-                  (tx) => (
-                    <div
-                      key={tx.id}
-                      className="
-                        border
-                        border-gray-100
-                        rounded-xl
-                        p-4
-                        bg-gray-50
-                      "
-                    >
-                      <div className="flex items-center justify-between mb-3">
-                        <div className="flex items-center gap-2 text-sm text-gray-600">
-                          <Calendar
-                            size={15}
-                          />
-
-                          {tx.date}
-                        </div>
-
-                        <span
-                          className={`
-                            px-2.5
-                            py-1
-                            rounded-full
+                        <thead
+                          className="
+                            bg-gray-50
                             text-xs
-                            font-semibold
-                            ${
-                              tx.status ===
-                              "Paid"
-                                ? "bg-green-100 text-green-700"
-                                : "bg-yellow-100 text-yellow-700"
-                            }
-                          `}
+                            text-gray-500
+                            uppercase
+                          "
                         >
-                          {tx.status}
-                        </span>
-                      </div>
 
-                      <div className="grid grid-cols-3 gap-2">
-                        <div>
-                          <p className="text-[11px] text-gray-500">
-                            Cards
-                          </p>
+                          <tr>
 
-                          <p className="font-semibold text-gray-900 mt-0.5">
-                            {tx.cards}
-                          </p>
-                        </div>
+                            <th className="px-4 py-3">
+                              Date
+                            </th>
 
-                        <div>
-                          <p className="text-[11px] text-gray-500">
-                            Amount
-                          </p>
+                            <th className="px-4 py-3">
+                              Cards
+                            </th>
 
-                          <p className="font-semibold text-gray-900 mt-0.5">
-                            ₹
-                            {formatMoney(
-                              tx.amount
-                            )}
-                          </p>
-                        </div>
+                            <th className="px-4 py-3">
+                              Amount
+                            </th>
 
-                        <div>
-                          <p className="text-[11px] text-gray-500">
-                            Commission
-                          </p>
+                            <th className="px-4 py-3">
+                              Your Commission
+                            </th>
 
-                          <p className="font-semibold text-green-600 mt-0.5">
-                            ₹
-                            {formatMoney(
-                              tx.commission
-                            )}
-                          </p>
-                        </div>
-                      </div>
+                            <th className="px-4 py-3">
+                              Status
+                            </th>
+
+                          </tr>
+
+                        </thead>
+
+                        <tbody className="divide-y divide-gray-50">
+
+                          {selectedOrg.transactions.map(
+                            (tx) => (
+                              <tr
+                                key={tx.id}
+                                className="hover:bg-gray-50"
+                              >
+
+                                {/* DATE */}
+
+                                <td
+                                  className="
+                                    px-4
+                                    py-3
+                                    text-gray-600
+                                  "
+                                >
+
+                                  <div className="flex items-center gap-1.5 whitespace-nowrap">
+
+                                    <Calendar
+                                      size={14}
+                                    />
+
+                                    {tx.date}
+
+                                  </div>
+
+                                </td>
+
+                                {/* CARDS */}
+
+                                <td className="px-4 py-3 font-medium">
+                                  {tx.cards}
+                                </td>
+
+                                {/* AMOUNT */}
+
+                                <td className="px-4 py-3 whitespace-nowrap">
+                                  ₹
+                                  {formatMoney(
+                                    tx.amount
+                                  )}
+                                </td>
+
+                                {/* COMMISSION */}
+
+                                <td
+                                  className="
+                                    px-4
+                                    py-3
+                                    font-semibold
+                                    text-green-600
+                                    whitespace-nowrap
+                                  "
+                                >
+                                  ₹
+                                  {formatMoney(
+                                    tx.commission
+                                  )}
+                                </td>
+
+                                {/* STATUS */}
+
+                                <td className="px-4 py-3">
+
+                                  <span
+                                    className={`
+                                      inline-flex
+                                      px-2.5
+                                      py-1
+                                      rounded-full
+                                      text-xs
+                                      font-semibold
+                                      ${
+                                        tx.status ===
+                                        "Paid"
+                                          ? "bg-green-100 text-green-700"
+                                          : "bg-yellow-100 text-yellow-700"
+                                      }
+                                    `}
+                                  >
+                                    {tx.status}
+                                  </span>
+
+                                </td>
+
+                              </tr>
+                            )
+                          )}
+
+                        </tbody>
+
+                      </table>
+
                     </div>
-                  )
-                )}
-              </div>
+
+                  </div>
+
+                  {/* MOBILE TRANSACTIONS */}
+
+                  <div className="sm:hidden mt-3 space-y-3">
+
+                    {selectedOrg.transactions.map(
+                      (tx) => (
+                        <div
+                          key={tx.id}
+                          className="
+                            border
+                            border-gray-100
+                            rounded-xl
+                            p-4
+                            bg-gray-50
+                          "
+                        >
+
+                          <div className="flex items-center justify-between mb-3">
+
+                            <div className="flex items-center gap-2 text-sm text-gray-600">
+
+                              <Calendar
+                                size={15}
+                              />
+
+                              {tx.date}
+
+                            </div>
+
+                            <span
+                              className={`
+                                px-2.5
+                                py-1
+                                rounded-full
+                                text-xs
+                                font-semibold
+                                ${
+                                  tx.status ===
+                                  "Paid"
+                                    ? "bg-green-100 text-green-700"
+                                    : "bg-yellow-100 text-yellow-700"
+                                }
+                              `}
+                            >
+                              {tx.status}
+                            </span>
+
+                          </div>
+
+                          <div className="grid grid-cols-3 gap-2">
+
+                            <div>
+
+                              <p className="text-[11px] text-gray-500">
+                                Cards
+                              </p>
+
+                              <p className="font-semibold text-gray-900 mt-0.5">
+                                {tx.cards}
+                              </p>
+
+                            </div>
+
+                            <div>
+
+                              <p className="text-[11px] text-gray-500">
+                                Amount
+                              </p>
+
+                              <p className="font-semibold text-gray-900 mt-0.5">
+                                ₹
+                                {formatMoney(
+                                  tx.amount
+                                )}
+                              </p>
+
+                            </div>
+
+                            <div>
+
+                              <p className="text-[11px] text-gray-500">
+                                Commission
+                              </p>
+
+                              <p className="font-semibold text-green-600 mt-0.5">
+                                ₹
+                                {formatMoney(
+                                  tx.commission
+                                )}
+                              </p>
+
+                            </div>
+
+                          </div>
+
+                        </div>
+                      )
+                    )}
+
+                  </div>
+                </>
+              ) : (
+                <div
+                  className="
+                    border
+                    border-gray-100
+                    rounded-xl
+                    bg-gray-50
+                    px-6
+                    py-10
+                    text-center
+                  "
+                >
+                  <CreditCard
+                    size={32}
+                    className="
+                      mx-auto
+                      text-gray-300
+                      mb-3
+                    "
+                  />
+
+                  <p className="text-gray-500 text-sm">
+                    No transactions available.
+                  </p>
+
+                  <p className="text-gray-400 text-xs mt-1">
+                    Transaction details are not included
+                    in the organizations API response.
+                  </p>
+                </div>
+              )}
+
             </div>
 
             {/* ==================================================
@@ -1410,11 +1571,10 @@ export default function MyReferredOrganizations() {
                 shrink-0
               "
             >
+
               <button
                 type="button"
-                onClick={() =>
-                  setSelectedOrg(null)
-                }
+                onClick={handleCloseModal}
                 className="
                   px-5
                   py-2.5
@@ -1431,10 +1591,14 @@ export default function MyReferredOrganizations() {
               >
                 Close
               </button>
+
             </div>
+
           </div>
+
         </div>
       )}
+
     </div>
   );
 }
