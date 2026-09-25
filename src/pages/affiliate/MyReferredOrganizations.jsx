@@ -1496,7 +1496,7 @@ export default function MyReferredOrganizations() {
                                 )}
                               </p>
 
-                            </div>
+                          </div>
 
                             <div>
 

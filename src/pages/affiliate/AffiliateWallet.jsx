@@ -1,650 +1,185 @@
-// import React, { useState } from "react";
-// import {
-//   Wallet as WalletIcon,
-//   ArrowDownLeft,
-//   ArrowUpRight,
-//   IndianRupee,
-//   Filter,
-// } from "lucide-react";
-
-// export default function Wallet() {
-//   const [filter, setFilter] = useState("all");
-
-//   // Static wallet transactions
-//   // Replace this with API data later
-//   const transactions = [
-//     {
-//       id: 1,
-//       date: "28 Aug 2026",
-//       description: "Commission from Organization Registration",
-//       type: "credit",
-//       amount: 500,
-//       status: "Completed",
-//     },
-//     {
-//       id: 2,
-//       date: "25 Aug 2026",
-//       description: "Commission from Purchase",
-//       type: "credit",
-//       amount: 750,
-//       status: "Completed",
-//     },
-//     {
-//       id: 3,
-//       date: "20 Aug 2026",
-//       description: "Commission from Organization Registration",
-//       type: "credit",
-//       amount: 450,
-//       status: "Completed",
-//     },
-//     {
-//       id: 4,
-//       date: "15 Aug 2026",
-//       description: "Wallet Withdrawal",
-//       type: "debit",
-//       amount: 500,
-//       status: "Completed",
-//     },
-//     {
-//       id: 5,
-//       date: "10 Aug 2026",
-//       description: "Commission from Purchase",
-//       type: "credit",
-//       amount: 800.75,
-//       status: "Completed",
-//     },
-//     {
-//       id: 6,
-//       date: "05 Aug 2026",
-//       description: "Commission from Organization Registration",
-//       type: "credit",
-//       amount: 450,
-//       status: "Completed",
-//     },
-//   ];
-
-//   const walletBalance = 2450.75;
-
-//   const filteredTransactions =
-//     filter === "all"
-//       ? transactions
-//       : transactions.filter(
-//           (transaction) => transaction.type === filter
-//         );
-
-//   return (
-//     <div className="p-6 lg:p-8 max-w-7xl mx-auto">
-
-//       {/* ================= HEADER ================= */}
-//       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-
-//         <div>
-//           <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">
-//             Wallet
-//           </h1>
-
-//           <p className="text-gray-500 mt-1">
-//             View your wallet balance and all transactions
-//           </p>
-//         </div>
-
-//         {/* Balance */}
-//         <div className="flex items-center gap-3">
-
-//           <div className="w-11 h-11 bg-orange-50 rounded-xl flex items-center justify-center">
-
-//             <WalletIcon
-//               size={22}
-//               className="text-[#FC6C26]"
-//             />
-
-//           </div>
-
-//           <div>
-
-//             <p className="text-xs text-gray-500">
-//               Current Balance
-//             </p>
-
-//             <p className="text-xl font-bold text-gray-900">
-//               ₹
-//               {walletBalance.toLocaleString("en-IN", {
-//                 minimumFractionDigits: 2,
-//               })}
-//             </p>
-
-//           </div>
-
-//         </div>
-
-//       </div>
-
-//       {/* ================= BALANCE CARD ================= */}
-//       <div
-//         className="
-//           bg-gradient-to-r
-//           from-[#FC6C26]
-//           to-orange-600
-//           rounded-2xl
-//           p-6
-//           text-white
-//           shadow-lg
-//           mb-8
-//         "
-//       >
-
-//         <div className="flex items-center justify-between">
-
-//           <div>
-
-//             <p className="text-orange-100 text-sm font-medium">
-//               Wallet Balance
-//             </p>
-
-//             <p className="text-4xl font-bold mt-2">
-//               ₹
-//               {walletBalance.toLocaleString("en-IN", {
-//                 minimumFractionDigits: 2,
-//               })}
-//             </p>
-
-//             <p className="text-orange-100 text-sm mt-2">
-//               Available wallet amount
-//             </p>
-
-//           </div>
-
-//           <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center">
-
-//             <WalletIcon size={32} />
-
-//           </div>
-
-//         </div>
-
-//       </div>
-
-//       {/* ================= TRANSACTIONS ================= */}
-//       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
-
-//         {/* Header */}
-//         <div className="p-6 border-b border-gray-100">
-
-//           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-
-//             <div>
-
-//               <h2 className="text-lg font-semibold text-gray-900">
-//                 Wallet Transactions
-//               </h2>
-
-//               <p className="text-sm text-gray-500 mt-1">
-//                 Complete history of your wallet activity
-//               </p>
-
-//             </div>
-
-//             {/* Filter */}
-//             <div className="flex items-center gap-2">
-
-//               <Filter
-//                 size={17}
-//                 className="text-gray-400"
-//               />
-
-//               <button
-//                 onClick={() => setFilter("all")}
-//                 className={`
-//                   px-4 py-2
-//                   rounded-lg
-//                   text-sm
-//                   font-medium
-//                   ${
-//                     filter === "all"
-//                       ? "bg-[#FC6C26] text-white"
-//                       : "bg-gray-100 text-gray-600"
-//                   }
-//                 `}
-//               >
-//                 All
-//               </button>
-
-//               <button
-//                 onClick={() => setFilter("credit")}
-//                 className={`
-//                   px-4 py-2
-//                   rounded-lg
-//                   text-sm
-//                   font-medium
-//                   ${
-//                     filter === "credit"
-//                       ? "bg-green-600 text-white"
-//                       : "bg-gray-100 text-gray-600"
-//                   }
-//                 `}
-//               >
-//                 Credits
-//               </button>
-
-//               <button
-//                 onClick={() => setFilter("debit")}
-//                 className={`
-//                   px-4 py-2
-//                   rounded-lg
-//                   text-sm
-//                   font-medium
-//                   ${
-//                     filter === "debit"
-//                       ? "bg-red-500 text-white"
-//                       : "bg-gray-100 text-gray-600"
-//                   }
-//                 `}
-//               >
-//                 Debits
-//               </button>
-
-//             </div>
-
-//           </div>
-
-//         </div>
-
-//         {/* ================= TABLE ================= */}
-//         <div className="overflow-x-auto">
-
-//           <table className="w-full">
-
-//             <thead>
-
-//               <tr className="bg-gray-50 border-b border-gray-100">
-
-//                 <th className="text-left px-6 py-4 text-xs font-semibold text-gray-500 uppercase">
-//                   Date
-//                 </th>
-
-//                 <th className="text-left px-6 py-4 text-xs font-semibold text-gray-500 uppercase">
-//                   Description
-//                 </th>
-
-//                 <th className="text-left px-6 py-4 text-xs font-semibold text-gray-500 uppercase">
-//                   Type
-//                 </th>
-
-//                 <th className="text-right px-6 py-4 text-xs font-semibold text-gray-500 uppercase">
-//                   Amount
-//                 </th>
-
-//                 <th className="text-right px-6 py-4 text-xs font-semibold text-gray-500 uppercase">
-//                   Status
-//                 </th>
-
-//               </tr>
-
-//             </thead>
-
-//             <tbody>
-
-//               {filteredTransactions.map((transaction) => (
-
-//                 <tr
-//                   key={transaction.id}
-//                   className="border-b border-gray-100 hover:bg-gray-50 transition"
-//                 >
-
-//                   {/* Date */}
-//                   <td className="px-6 py-5">
-
-//                     <p className="text-sm font-medium text-gray-900">
-//                       {transaction.date}
-//                     </p>
-
-//                   </td>
-
-//                   {/* Description */}
-//                   <td className="px-6 py-5">
-
-//                     <div className="flex items-center gap-3">
-
-//                       <div
-//                         className={`
-//                           w-10 h-10
-//                           rounded-xl
-//                           flex items-center justify-center
-//                           ${
-//                             transaction.type === "credit"
-//                               ? "bg-green-50"
-//                               : "bg-red-50"
-//                           }
-//                         `}
-//                       >
-
-//                         {transaction.type === "credit" ? (
-//                           <ArrowDownLeft
-//                             size={19}
-//                             className="text-green-600"
-//                           />
-//                         ) : (
-//                           <ArrowUpRight
-//                             size={19}
-//                             className="text-red-500"
-//                           />
-//                         )}
-
-//                       </div>
-
-//                       <div>
-
-//                         <p className="text-sm font-medium text-gray-900">
-//                           {transaction.description}
-//                         </p>
-
-//                         <p className="text-xs text-gray-400 mt-1">
-//                           Transaction #{transaction.id}
-//                         </p>
-
-//                       </div>
-
-//                     </div>
-
-//                   </td>
-
-//                   {/* Type */}
-//                   <td className="px-6 py-5">
-
-//                     {transaction.type === "credit" ? (
-
-//                       <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-green-50 text-green-600 text-xs font-medium">
-//                         <ArrowDownLeft size={13} />
-//                         Credit
-//                       </span>
-
-//                     ) : (
-
-//                       <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-red-50 text-red-500 text-xs font-medium">
-//                         <ArrowUpRight size={13} />
-//                         Debit
-//                       </span>
-
-//                     )}
-
-//                   </td>
-
-//                   {/* Amount */}
-//                   <td className="px-6 py-5 text-right">
-
-//                     <p
-//                       className={`
-//                         font-semibold
-//                         ${
-//                           transaction.type === "credit"
-//                             ? "text-green-600"
-//                             : "text-red-500"
-//                         }
-//                       `}
-//                     >
-//                       {transaction.type === "credit"
-//                         ? "+"
-//                         : "-"}
-//                       ₹
-//                       {transaction.amount.toLocaleString(
-//                         "en-IN",
-//                         {
-//                           minimumFractionDigits: 2,
-//                         }
-//                       )}
-//                     </p>
-
-//                   </td>
-
-//                   {/* Status */}
-//                   <td className="px-6 py-5 text-right">
-
-//                     <span className="inline-flex px-3 py-1 rounded-full bg-green-50 text-green-600 text-xs font-medium">
-//                       {transaction.status}
-//                     </span>
-
-//                   </td>
-
-//                 </tr>
-
-//               ))}
-
-//             </tbody>
-
-//           </table>
-
-//         </div>
-
-//         {/* Empty state */}
-//         {filteredTransactions.length === 0 && (
-
-//           <div className="py-16 text-center">
-
-//             <WalletIcon
-//               size={40}
-//               className="mx-auto text-gray-300"
-//             />
-
-//             <p className="text-gray-500 mt-3">
-//               No wallet transactions found
-//             </p>
-
-//           </div>
-
-//         )}
-
-//       </div>
-
-//     </div>
-//   );
-// }
-
 import { useEffect, useState } from "react";
 import {
   Wallet as WalletIcon,
   ArrowDownLeft,
   ArrowUpRight,
   Filter,
+  Loader2,
+  RefreshCw,
 } from "lucide-react";
 
-const DEFAULT_WALLET_BALANCE = 2450.75;
-const WALLET_STORAGE_KEY = "affiliateWalletBalance";
-const TRANSACTIONS_STORAGE_KEY = "affiliateWalletTransactions";
-
-const DEFAULT_TRANSACTIONS = [
-  {
-    id: 1,
-    date: "28 Aug 2026",
-    description: "Commission from Organization Registration",
-    type: "credit",
-    amount: 500,
-    status: "Completed",
-  },
-  {
-    id: 2,
-    date: "25 Aug 2026",
-    description: "Commission from Purchase",
-    type: "credit",
-    amount: 750,
-    status: "Completed",
-  },
-  {
-    id: 3,
-    date: "20 Aug 2026",
-    description: "Commission from Organization Registration",
-    type: "credit",
-    amount: 450,
-    status: "Completed",
-  },
-  {
-    id: 4,
-    date: "15 Aug 2026",
-    description: "Wallet Withdrawal",
-    type: "debit",
-    amount: 500,
-    status: "Completed",
-  },
-  {
-    id: 5,
-    date: "10 Aug 2026",
-    description: "Commission from Purchase",
-    type: "credit",
-    amount: 800.75,
-    status: "Completed",
-  },
-  {
-    id: 6,
-    date: "05 Aug 2026",
-    description: "Commission from Organization Registration",
-    type: "credit",
-    amount: 450,
-    status: "Completed",
-  },
-];
+import api from "../../services/api";
 
 export default function Wallet() {
   const [filter, setFilter] = useState("all");
 
-  const [walletBalance, setWalletBalance] = useState(
-    DEFAULT_WALLET_BALANCE
-  );
+  const [walletBalance, setWalletBalance] = useState(0);
 
-  const [transactions, setTransactions] = useState(
-    DEFAULT_TRANSACTIONS
-  );
+  const [transactions, setTransactions] = useState([]);
+
+  const [loading, setLoading] = useState(true);
+
+  const [error, setError] = useState("");
+
+  const [pagination, setPagination] = useState({
+    current_page: 1,
+    per_page: 10,
+    total: 0,
+    last_page: 1,
+  });
 
   // ============================================================
-  // LOAD WALLET BALANCE + TRANSACTIONS
+  // LOAD WALLET
+  // ============================================================
+
+  const loadWallet = async (selectedFilter = filter, page = 1) => {
+    try {
+      setLoading(true);
+      setError("");
+
+      const response = await api.get("/affiliate/wallet", {
+        params: {
+          type: selectedFilter,
+          page,
+          per_page: 10,
+        },
+      });
+
+      if (!response.data?.status) {
+        throw new Error(
+          response.data?.message ||
+            "Unable to fetch wallet."
+        );
+      }
+
+      const data = response.data.data;
+
+      // --------------------------------------------------------
+      // Wallet Balance
+      // --------------------------------------------------------
+
+      setWalletBalance(
+        Number(data?.wallet_balance || 0)
+      );
+
+      // --------------------------------------------------------
+      // Transactions
+      // --------------------------------------------------------
+
+      setTransactions(
+        data?.transactions?.data || []
+      );
+
+      // --------------------------------------------------------
+      // Pagination
+      // --------------------------------------------------------
+
+      setPagination({
+        current_page:
+          data?.transactions?.current_page || 1,
+
+        per_page:
+          data?.transactions?.per_page || 10,
+
+        total:
+          data?.transactions?.total || 0,
+
+        last_page:
+          data?.transactions?.last_page || 1,
+      });
+
+    } catch (err) {
+      console.error(
+        "Wallet API Error:",
+        err
+      );
+
+      setError(
+        err?.response?.data?.message ||
+          err?.message ||
+          "Unable to load wallet."
+      );
+
+      setTransactions([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ============================================================
+  // INITIAL LOAD
   // ============================================================
 
   useEffect(() => {
-    // Load balance
-    const savedBalance = localStorage.getItem(
-      WALLET_STORAGE_KEY
-    );
-
-    if (savedBalance !== null) {
-      const parsedBalance = Number(savedBalance);
-
-      if (!Number.isNaN(parsedBalance)) {
-        setWalletBalance(parsedBalance);
-      }
-    } else {
-      localStorage.setItem(
-        WALLET_STORAGE_KEY,
-        DEFAULT_WALLET_BALANCE.toString()
-      );
-    }
-
-    // Load transactions
-    const savedTransactions = localStorage.getItem(
-      TRANSACTIONS_STORAGE_KEY
-    );
-
-    if (savedTransactions) {
-      try {
-        const parsedTransactions =
-          JSON.parse(savedTransactions);
-
-        if (Array.isArray(parsedTransactions)) {
-          setTransactions(parsedTransactions);
-        }
-      } catch (error) {
-        console.error(
-          "Failed to load wallet transactions:",
-          error
-        );
-      }
-    } else {
-      localStorage.setItem(
-        TRANSACTIONS_STORAGE_KEY,
-        JSON.stringify(DEFAULT_TRANSACTIONS)
-      );
-    }
+    loadWallet("all", 1);
   }, []);
 
   // ============================================================
-  // LISTEN FOR WALLET UPDATES
+  // FILTER
   // ============================================================
 
-  useEffect(() => {
-    const updateWallet = () => {
-      const savedBalance = localStorage.getItem(
-        WALLET_STORAGE_KEY
-      );
+  const handleFilterChange = (newFilter) => {
+    setFilter(newFilter);
 
-      if (savedBalance !== null) {
-        const parsedBalance = Number(savedBalance);
-
-        if (!Number.isNaN(parsedBalance)) {
-          setWalletBalance(parsedBalance);
-        }
-      }
-
-      const savedTransactions = localStorage.getItem(
-        TRANSACTIONS_STORAGE_KEY
-      );
-
-      if (savedTransactions) {
-        try {
-          const parsedTransactions =
-            JSON.parse(savedTransactions);
-
-          if (Array.isArray(parsedTransactions)) {
-            setTransactions(parsedTransactions);
-          }
-        } catch (error) {
-          console.error(
-            "Failed to update wallet transactions:",
-            error
-          );
-        }
-      }
-    };
-
-    // Other browser tabs
-    window.addEventListener("storage", updateWallet);
-
-    // Same browser tab
-    window.addEventListener(
-      "affiliateWalletUpdated",
-      updateWallet
-    );
-
-    return () => {
-      window.removeEventListener(
-        "storage",
-        updateWallet
-      );
-
-      window.removeEventListener(
-        "affiliateWalletUpdated",
-        updateWallet
-      );
-    };
-  }, []);
+    loadWallet(newFilter, 1);
+  };
 
   // ============================================================
-  // FILTER TRANSACTIONS
+  // PAGINATION
   // ============================================================
 
-  const filteredTransactions =
-    filter === "all"
-      ? transactions
-      : transactions.filter(
-          (transaction) =>
-            transaction.type === filter
-        );
+  const handlePageChange = (page) => {
+    if (
+      page < 1 ||
+      page > pagination.last_page
+    ) {
+      return;
+    }
+
+    loadWallet(filter, page);
+  };
 
   // ============================================================
   // FORMAT BALANCE
   // ============================================================
 
   const formattedBalance =
-    Number(walletBalance).toLocaleString("en-IN", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
+    Number(walletBalance).toLocaleString(
+      "en-IN",
+      {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }
+    );
+
+  // ============================================================
+  // TRANSACTION STATUS
+  // ============================================================
+
+  const getStatusClass = (status) => {
+    switch (
+      String(status || "").toLowerCase()
+    ) {
+      case "completed":
+      case "paid":
+      case "success":
+        return "bg-green-50 text-green-600";
+
+      case "pending":
+        return "bg-yellow-50 text-yellow-600";
+
+      case "failed":
+      case "cancelled":
+        return "bg-red-50 text-red-500";
+
+      default:
+        return "bg-gray-100 text-gray-600";
+    }
+  };
+
+  // ============================================================
+  // RENDER
+  // ============================================================
 
   return (
     <div className="p-6 lg:p-8 max-w-7xl mx-auto">
@@ -664,6 +199,7 @@ export default function Wallet() {
           mb-8
         "
       >
+
         <div>
           <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">
             Wallet
@@ -695,6 +231,7 @@ export default function Wallet() {
           </div>
 
           <div>
+
             <p className="text-xs text-gray-500">
               Current Balance
             </p>
@@ -702,64 +239,16 @@ export default function Wallet() {
             <p className="text-xl font-bold text-gray-900">
               ₹{formattedBalance}
             </p>
+
           </div>
 
         </div>
+
       </div>
 
-      {/* ========================================================
-          BALANCE CARD
-      ========================================================= */}
-
-      {/* <div
-        className="
-          bg-gradient-to-r
-          from-[#FC6C26]
-          to-orange-600
-          rounded-2xl
-          p-6
-          text-white
-          shadow-lg
-          mb-8
-        "
-      >
-        <div className="flex items-center justify-between">
-
-          <div>
-
-            <p className="text-orange-100 text-sm font-medium">
-              Wallet Balance
-            </p>
-
-            <p className="text-4xl font-bold mt-2">
-              ₹{formattedBalance}
-            </p>
-
-            <p className="text-orange-100 text-sm mt-2">
-              Available wallet amount
-            </p>
-
-          </div>
-
-          <div
-            className="
-              w-16
-              h-16
-              bg-white/20
-              rounded-2xl
-              flex
-              items-center
-              justify-center
-            "
-          >
-            <WalletIcon size={32} />
-          </div>
-
-        </div>
-      </div> */}
 
       {/* ========================================================
-          TRANSACTIONS
+          TRANSACTIONS CARD
       ========================================================= */}
 
       <div
@@ -772,7 +261,10 @@ export default function Wallet() {
         "
       >
 
-        {/* Header */}
+        {/* ======================================================
+            HEADER
+        ======================================================= */}
+
         <div className="p-6 border-b border-gray-100">
 
           <div
@@ -787,6 +279,7 @@ export default function Wallet() {
           >
 
             <div>
+
               <h2 className="text-lg font-semibold text-gray-900">
                 Wallet Transactions
               </h2>
@@ -794,9 +287,14 @@ export default function Wallet() {
               <p className="text-sm text-gray-500 mt-1">
                 Complete history of your wallet activity
               </p>
+
             </div>
 
-            {/* Filter */}
+
+            {/* ==================================================
+                FILTER
+            =================================================== */}
+
             <div className="flex items-center gap-2 flex-wrap">
 
               <Filter
@@ -804,8 +302,13 @@ export default function Wallet() {
                 className="text-gray-400"
               />
 
+              {/* ALL */}
+
               <button
-                onClick={() => setFilter("all")}
+                onClick={() =>
+                  handleFilterChange("all")
+                }
+                disabled={loading}
                 className={`
                   px-4
                   py-2
@@ -818,13 +321,20 @@ export default function Wallet() {
                       ? "bg-[#FC6C26] text-white"
                       : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                   }
+                  disabled:opacity-60
                 `}
               >
                 All
               </button>
 
+
+              {/* CREDITS */}
+
               <button
-                onClick={() => setFilter("credit")}
+                onClick={() =>
+                  handleFilterChange("credit")
+                }
+                disabled={loading}
                 className={`
                   px-4
                   py-2
@@ -837,13 +347,20 @@ export default function Wallet() {
                       ? "bg-green-600 text-white"
                       : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                   }
+                  disabled:opacity-60
                 `}
               >
                 Credits
               </button>
 
+
+              {/* DEBITS */}
+
               <button
-                onClick={() => setFilter("debit")}
+                onClick={() =>
+                  handleFilterChange("debit")
+                }
+                disabled={loading}
                 className={`
                   px-4
                   py-2
@@ -856,14 +373,69 @@ export default function Wallet() {
                       ? "bg-red-500 text-white"
                       : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                   }
+                  disabled:opacity-60
                 `}
               >
                 Debits
               </button>
 
+
+              {/* REFRESH */}
+
+              <button
+                onClick={() =>
+                  loadWallet(filter, pagination.current_page)
+                }
+                disabled={loading}
+                className="
+                  ml-1
+                  w-9
+                  h-9
+                  rounded-lg
+                  bg-gray-100
+                  text-gray-500
+                  flex
+                  items-center
+                  justify-center
+                  hover:bg-gray-200
+                  transition
+                  disabled:opacity-50
+                "
+                title="Refresh wallet"
+              >
+                <RefreshCw
+                  size={16}
+                  className={
+                    loading
+                      ? "animate-spin"
+                      : ""
+                  }
+                />
+              </button>
+
             </div>
+
           </div>
+
         </div>
+
+
+        {/* ======================================================
+            ERROR
+        ======================================================= */}
+
+        {error && (
+
+          <div className="mx-6 mt-6 rounded-xl bg-red-50 border border-red-200 px-4 py-3">
+
+            <p className="text-sm text-red-600">
+              {error}
+            </p>
+
+          </div>
+
+        )}
+
 
         {/* ======================================================
             TABLE
@@ -874,6 +446,7 @@ export default function Wallet() {
           <table className="w-full">
 
             <thead>
+
               <tr className="bg-gray-50 border-b border-gray-100">
 
                 <th className="text-left px-6 py-4 text-xs font-semibold text-gray-500 uppercase">
@@ -897,192 +470,305 @@ export default function Wallet() {
                 </th>
 
               </tr>
+
             </thead>
+
 
             <tbody>
 
-              {filteredTransactions.map(
-                (transaction) => (
+              {/* =================================================
+                  LOADING
+              ================================================== */}
 
-                  <tr
-                    key={transaction.id}
-                    className="
-                      border-b
-                      border-gray-100
-                      hover:bg-gray-50
-                      transition
-                    "
+              {loading ? (
+
+                <tr>
+
+                  <td
+                    colSpan="5"
+                    className="px-6 py-16 text-center"
                   >
 
-                    {/* Date */}
-                    <td className="px-6 py-5">
+                    <div className="flex flex-col items-center justify-center">
 
-                      <p className="text-sm font-medium text-gray-900">
-                        {transaction.date}
-                      </p>
-
-                    </td>
-
-                    {/* Description */}
-                    <td className="px-6 py-5">
-
-                      <div className="flex items-center gap-3">
-
-                        <div
-                          className={`
-                            w-10
-                            h-10
-                            rounded-xl
-                            flex
-                            items-center
-                            justify-center
-                            ${
-                              transaction.type ===
-                              "credit"
-                                ? "bg-green-50"
-                                : "bg-red-50"
-                            }
-                          `}
-                        >
-
-                          {transaction.type ===
-                          "credit" ? (
-                            <ArrowDownLeft
-                              size={19}
-                              className="text-green-600"
-                            />
-                          ) : (
-                            <ArrowUpRight
-                              size={19}
-                              className="text-red-500"
-                            />
-                          )}
-
-                        </div>
-
-                        <div>
-
-                          <p className="text-sm font-medium text-gray-900">
-                            {transaction.description}
-                          </p>
-
-                          <p className="text-xs text-gray-400 mt-1">
-                            Transaction #
-                            {transaction.id}
-                          </p>
-
-                        </div>
-
-                      </div>
-
-                    </td>
-
-                    {/* Type */}
-                    <td className="px-6 py-5">
-
-                      {transaction.type ===
-                      "credit" ? (
-
-                        <span
-                          className="
-                            inline-flex
-                            items-center
-                            gap-1
-                            px-3
-                            py-1
-                            rounded-full
-                            bg-green-50
-                            text-green-600
-                            text-xs
-                            font-medium
-                          "
-                        >
-                          <ArrowDownLeft
-                            size={13}
-                          />
-                          Credit
-                        </span>
-
-                      ) : (
-
-                        <span
-                          className="
-                            inline-flex
-                            items-center
-                            gap-1
-                            px-3
-                            py-1
-                            rounded-full
-                            bg-red-50
-                            text-red-500
-                            text-xs
-                            font-medium
-                          "
-                        >
-                          <ArrowUpRight
-                            size={13}
-                          />
-                          Debit
-                        </span>
-
-                      )}
-
-                    </td>
-
-                    {/* Amount */}
-                    <td className="px-6 py-5 text-right">
-
-                      <p
-                        className={`
-                          font-semibold
-                          ${
-                            transaction.type ===
-                            "credit"
-                              ? "text-green-600"
-                              : "text-red-500"
-                          }
-                        `}
-                      >
-                        {transaction.type ===
-                        "credit"
-                          ? "+"
-                          : "-"}
-                        ₹
-                        {Number(
-                          transaction.amount
-                        ).toLocaleString(
-                          "en-IN",
-                          {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
-                          }
-                        )}
-                      </p>
-
-                    </td>
-
-                    {/* Status */}
-                    <td className="px-6 py-5 text-right">
-
-                      <span
+                      <Loader2
+                        size={32}
                         className="
-                          inline-flex
-                          px-3
-                          py-1
-                          rounded-full
-                          bg-green-50
-                          text-green-600
-                          text-xs
-                          font-medium
+                          animate-spin
+                          text-[#FC6C26]
+                        "
+                      />
+
+                      <p className="text-gray-500 mt-3 text-sm">
+                        Loading wallet transactions...
+                      </p>
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+              ) : transactions.length > 0 ? (
+
+                /* =================================================
+                   TRANSACTIONS
+                ================================================== */
+
+                transactions.map(
+                  (transaction) => {
+
+                    const isCredit =
+                      String(
+                        transaction.type
+                      ).toLowerCase() ===
+                      "credit";
+
+                    return (
+
+                      <tr
+                        key={transaction.id}
+                        className="
+                          border-b
+                          border-gray-100
+                          hover:bg-gray-50
+                          transition
                         "
                       >
-                        {transaction.status}
-                      </span>
 
-                    </td>
+                        {/* DATE */}
 
-                  </tr>
+                        <td className="px-6 py-5">
+
+                          <p className="text-sm font-medium text-gray-900">
+
+                            {transaction.display_date ||
+                              transaction.date ||
+                              "-"}
+
+                          </p>
+
+                        </td>
+
+
+                        {/* DESCRIPTION */}
+
+                        <td className="px-6 py-5">
+
+                          <div className="flex items-center gap-3">
+
+                            <div
+                              className={`
+                                w-10
+                                h-10
+                                rounded-xl
+                                flex
+                                items-center
+                                justify-center
+                                ${
+                                  isCredit
+                                    ? "bg-green-50"
+                                    : "bg-red-50"
+                                }
+                              `}
+                            >
+
+                              {isCredit ? (
+
+                                <ArrowDownLeft
+                                  size={19}
+                                  className="text-green-600"
+                                />
+
+                              ) : (
+
+                                <ArrowUpRight
+                                  size={19}
+                                  className="text-red-500"
+                                />
+
+                              )}
+
+                            </div>
+
+
+                            <div>
+
+                              <p className="text-sm font-medium text-gray-900">
+
+                                {transaction.description ||
+                                  "-"}
+
+                              </p>
+
+
+                              <p className="text-xs text-gray-400 mt-1">
+
+                                {transaction.transaction_no ||
+                                  `Transaction #${transaction.id}`}
+
+                              </p>
+
+                            </div>
+
+                          </div>
+
+                        </td>
+
+
+                        {/* TYPE */}
+
+                        <td className="px-6 py-5">
+
+                          {isCredit ? (
+
+                            <span
+                              className="
+                                inline-flex
+                                items-center
+                                gap-1
+                                px-3
+                                py-1
+                                rounded-full
+                                bg-green-50
+                                text-green-600
+                                text-xs
+                                font-medium
+                              "
+                            >
+
+                              <ArrowDownLeft
+                                size={13}
+                              />
+
+                              Credit
+
+                            </span>
+
+                          ) : (
+
+                            <span
+                              className="
+                                inline-flex
+                                items-center
+                                gap-1
+                                px-3
+                                py-1
+                                rounded-full
+                                bg-red-50
+                                text-red-500
+                                text-xs
+                                font-medium
+                              "
+                            >
+
+                              <ArrowUpRight
+                                size={13}
+                              />
+
+                              Debit
+
+                            </span>
+
+                          )}
+
+                        </td>
+
+
+                        {/* AMOUNT */}
+
+                        <td className="px-6 py-5 text-right">
+
+                          <p
+                            className={`
+                              font-semibold
+                              ${
+                                isCredit
+                                  ? "text-green-600"
+                                  : "text-red-500"
+                              }
+                            `}
+                          >
+
+                            {isCredit
+                              ? "+"
+                              : "-"}
+
+                            ₹
+
+                            {Number(
+                              transaction.amount || 0
+                            ).toLocaleString(
+                              "en-IN",
+                              {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              }
+                            )}
+
+                          </p>
+
+                        </td>
+
+
+                        {/* STATUS */}
+
+                        <td className="px-6 py-5 text-right">
+
+                          <span
+                            className={`
+                              inline-flex
+                              px-3
+                              py-1
+                              rounded-full
+                              text-xs
+                              font-medium
+                              capitalize
+                              ${getStatusClass(
+                                transaction.status
+                              )}
+                            `}
+                          >
+
+                            {transaction.status ||
+                              "Unknown"}
+
+                          </span>
+
+                        </td>
+
+                      </tr>
+
+                    );
+                  }
                 )
+
+              ) : (
+
+                /* =================================================
+                   EMPTY
+                ================================================== */
+
+                <tr>
+
+                  <td
+                    colSpan="5"
+                    className="px-6 py-16 text-center"
+                  >
+
+                    <WalletIcon
+                      size={40}
+                      className="mx-auto text-gray-300"
+                    />
+
+                    <p className="text-gray-500 mt-3">
+                      No wallet transactions found
+                    </p>
+
+                  </td>
+
+                </tr>
+
               )}
 
             </tbody>
@@ -1091,23 +777,108 @@ export default function Wallet() {
 
         </div>
 
-        {/* Empty State */}
-        {filteredTransactions.length === 0 && (
 
-          <div className="py-16 text-center">
+        {/* ======================================================
+            PAGINATION
+        ======================================================= */}
 
-            <WalletIcon
-              size={40}
-              className="mx-auto text-gray-300"
-            />
+        {!loading &&
+          transactions.length > 0 &&
+          pagination.last_page > 1 && (
 
-            <p className="text-gray-500 mt-3">
-              No wallet transactions found
-            </p>
+            <div
+              className="
+                flex
+                flex-col
+                sm:flex-row
+                sm:items-center
+                sm:justify-between
+                gap-3
+                px-6
+                py-4
+                border-t
+                border-gray-100
+              "
+            >
 
-          </div>
+              <p className="text-sm text-gray-500">
 
-        )}
+                Showing page{" "}
+                <span className="font-medium text-gray-700">
+                  {pagination.current_page}
+                </span>{" "}
+                of{" "}
+                <span className="font-medium text-gray-700">
+                  {pagination.last_page}
+                </span>
+
+                {" "}(
+                {pagination.total} transactions)
+
+              </p>
+
+
+              <div className="flex items-center gap-2">
+
+                <button
+                  onClick={() =>
+                    handlePageChange(
+                      pagination.current_page - 1
+                    )
+                  }
+                  disabled={
+                    pagination.current_page <= 1 ||
+                    loading
+                  }
+                  className="
+                    px-4
+                    py-2
+                    rounded-lg
+                    bg-gray-100
+                    text-gray-600
+                    text-sm
+                    font-medium
+                    hover:bg-gray-200
+                    disabled:opacity-40
+                    disabled:cursor-not-allowed
+                  "
+                >
+                  Previous
+                </button>
+
+
+                <button
+                  onClick={() =>
+                    handlePageChange(
+                      pagination.current_page + 1
+                    )
+                  }
+                  disabled={
+                    pagination.current_page >=
+                      pagination.last_page ||
+                    loading
+                  }
+                  className="
+                    px-4
+                    py-2
+                    rounded-lg
+                    bg-gray-100
+                    text-gray-600
+                    text-sm
+                    font-medium
+                    hover:bg-gray-200
+                    disabled:opacity-40
+                    disabled:cursor-not-allowed
+                  "
+                >
+                  Next
+                </button>
+
+              </div>
+
+            </div>
+
+          )}
 
       </div>
 
